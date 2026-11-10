@@ -27,7 +27,11 @@ Consulte a documentação aplicável quando a implementação depender de detalh
 
 ## Organização do código
 
-Estrutura de referência para crescer a partir das rotas e arquivos existentes. Crie somente os diretórios necessários para a feature em implementação.
+O diagrama a seguir é uma referência de organização, não uma lista de pastas ou arquivos a criar. Algumas entradas são ilustrativas e podem não existir no projeto.
+
+- Crie uma pasta somente quando houver conteúdo necessário para a implementação atual; não antecipe pastas para funcionalidades, camadas ou arquivos futuros.
+- Não crie pastas vazias nem arquivos artificiais, como `.gitkeep`, apenas para reproduzir o diagrama ou reservar estrutura.
+- Preserve a organização existente quando ela atender à necessidade atual; adicione novas pastas conforme a aplicação crescer.
 
 ```text
 src/
@@ -73,8 +77,6 @@ src/
                 ├── +page.svelte
                 └── +page.server.ts   # Loader do versus
 ```
-
-Esta estrutura é uma convenção para novas mudanças, não uma tarefa para criar arquivos vazios. Mantenha os nomes e a organização existentes quando eles já atenderem à feature.
 
 ## Regras de dependência
 
