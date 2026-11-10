@@ -54,7 +54,7 @@
       placeholder="Digite o nome de um personagem"
       autocomplete="off"
       aria-describedby="character-search-status"
-      class="h-14 w-full rounded-xl border-2 border-input bg-card px-6 pr-14 text-base outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+      class="h-14 w-full rounded-xl border bg-card px-6 pr-14 text-base outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
     />
     {#if query}
       <button
