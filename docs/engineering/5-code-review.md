@@ -10,6 +10,7 @@ O review deve consultar:
 - [arquitetura](./1-architecture.md) para limites entre rotas, features, repositórios e código server-only;
 - [estilização](./2-styling.md) para padrões de CSS e acessibilidade visual/interativa;
 - [testes](./3-testing.md) para estratégia de validação e cobertura;
+- [QA e testes E2E](./6-qa.md) quando houver mudanças na automação ou nas jornadas E2E;
 - [SEO](./4-seo.md) para requisitos das páginas públicas.
 
 ## Critérios

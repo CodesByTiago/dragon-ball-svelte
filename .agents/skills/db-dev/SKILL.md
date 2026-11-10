@@ -31,6 +31,7 @@ Implemente a solicitação no projeto existente seguindo o PRD e a arquitetura d
 - Para decisões que alterem padrões, limites ou estrutura arquitetural compartilhados, consulte `/db-architecture` e atualize `docs/engineering/1-architecture.md`; implemente conforme a decisão documentada.
 - SEO não faz parte desta skill. Para requisitos, documentação ou implementação de SEO, use `db-seo` e `docs/engineering/4-seo.md`.
 - Quando receber achados de `/db-code-review`, faça a triagem e corrija os desvios confirmados. Para achados marcados como fora do definido, consulte o PRD e a documentação: implemente apenas se o requisito já estiver claro; caso contrário, peça esclarecimento e atualize a especificação antes de codificar. Após as correções, solicite uma nova revisão com `/db-code-review`.
+- Quando receber achados de `/db-qa`, faça a mesma triagem e encaminhe a correção para nova validação E2E pelo `/db-qa`, conforme `docs/engineering/6-qa.md`.
 
 ## Verificação
 

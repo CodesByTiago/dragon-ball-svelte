@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { optimizedImage } from "#lib/shared/images/optimizedImage.js";
   import type { Character } from "#lib/shared/models/character.js";
   import { comparisonSelection } from "#lib/shared/state/comparisonSelection.svelte.js";
   import { Button } from "#lib/shared/ui/button/index.js";
@@ -33,9 +34,12 @@
       >
         {#if character.image}
           <img
-            src={character.image}
+            {...optimizedImage(character.image, 640)}
+            sizes="(min-width: 1280px) 640px, (min-width: 768px) 50vw, 100vw"
             alt={character.name}
             class="h-80 w-full object-contain md:h-96"
+            fetchpriority="high"
+            decoding="async"
             width="640"
             height="480"
           />
@@ -98,7 +102,8 @@
           <article class="mt-4 overflow-hidden rounded-xl border">
             {#if character.originPlanet.image}
               <img
-                src={character.originPlanet.image}
+                {...optimizedImage(character.originPlanet.image, 640)}
+                sizes="(min-width: 1280px) 640px, (min-width: 1024px) 50vw, 100vw"
                 alt={character.originPlanet.name}
                 class="aspect-16/7 w-full bg-muted object-cover"
                 loading="lazy"
@@ -140,7 +145,8 @@
               <article class="flex h-full items-center gap-4 rounded-xl border bg-card p-4 transition-colors hover:border-primary/40">
                 {#if transformation.image}
                   <img
-                    src={transformation.image}
+                    {...optimizedImage(transformation.image, 160)}
+                    sizes="80px"
                     alt=""
                     class="h-24 w-20 shrink-0 rounded-lg bg-accent/70 object-contain p-1"
                     loading="lazy"

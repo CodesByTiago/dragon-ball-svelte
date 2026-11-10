@@ -1,10 +1,17 @@
 import adapter from "@sveltejs/adapter-auto";
+import vercel from "@sveltejs/adapter-vercel";
 import { sveltekit } from "@sveltejs/kit/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { svelteTesting } from "@testing-library/svelte/vite";
 import { defineConfig, lazyPlugins } from "vite-plus";
+import { imageWidths, imageRemotePatterns } from "./src/lib/shared/images/config.js";
+
+const isVercel = process.env.VERCEL === "1";
 
 export default defineConfig({
+  define: {
+    "import.meta.env.VITE_VERCEL_IMAGE_OPTIMIZATION": JSON.stringify(isVercel ? "true" : "false"),
+  },
   staged: {
     "*": "vp check --fix",
   },
@@ -47,10 +54,17 @@ export default defineConfig({
           filename.split(/[/\\]/).includes("node_modules") ? undefined : true,
       },
 
-      // adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
-      // If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-      // See https://svelte.dev/docs/kit/adapters for more information about adapters.
-      adapter: adapter(),
+      adapter: isVercel
+        ? vercel({
+            images: {
+              sizes: [...imageWidths],
+              domains: [],
+              remotePatterns: imageRemotePatterns,
+              formats: ["image/webp"],
+              minimumCacheTTL: 86400,
+            },
+          })
+        : adapter(),
     }),
   ]),
 });

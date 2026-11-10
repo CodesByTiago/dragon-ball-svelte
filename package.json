@@ -13,6 +13,8 @@
     "preview": "vp preview",
     "test": "vp test run",
     "test:watch": "vp test watch",
+    "test:e2e": "playwright test",
+    "audit:seo": "node scripts/lighthouse.mjs",
     "prepare": "vp config && svelte-kit sync || echo ''",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
@@ -23,13 +25,16 @@
     "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.0",
     "@sveltejs/adapter-auto": "^8.0.0",
+    "@sveltejs/adapter-vercel": "^7.0.2",
     "@sveltejs/kit": "^3.0.0",
     "@sveltejs/vite-plugin-svelte": "^7.2.0",
     "@tailwindcss/vite": "^4.3.5",
     "@testing-library/svelte": "^5.4.2",
     "@testing-library/user-event": "^14.6.8",
     "jsdom": "^31.0.0",
+    "lighthouse": "^13.6.0",
     "msw": "^3.0.4",
     "shadcn-svelte": "^1.8.0",
     "svelte": "^5.57.2",

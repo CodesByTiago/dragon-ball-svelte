@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import { optimizedImage } from "#lib/shared/images/optimizedImage.js";
   import type { CharacterPage, CharacterSummary } from "#lib/shared/models/character.js";
   import { comparisonSelection } from "#lib/shared/state/comparisonSelection.svelte.js";
   import { Button } from "#lib/shared/ui/button/index.js";
@@ -11,6 +13,10 @@
   let { catalog }: Props = $props();
   let selected = $derived(comparisonSelection.items);
   let selectionMessage = $state("");
+  let hydrated = $state(false);
+  onMount(() => {
+    hydrated = true;
+  });
   let pageNumbers = $derived.by(() => {
     const count = Math.min(3, catalog.totalPages);
     const start = Math.max(1, Math.min(catalog.currentPage - 1, catalog.totalPages - count + 1));
@@ -111,7 +117,8 @@
                 <span class="relative block aspect-square overflow-hidden bg-linear-to-br from-sky-50 via-muted to-orange-50 dark:from-sky-950/30 dark:via-muted dark:to-orange-950/30">
                   {#if character.image}
                     <img
-                      src={character.image}
+                      {...optimizedImage(character.image, 320)}
+                      sizes="(min-width: 1280px) 200px, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                       alt=""
                       class="size-full object-contain p-3 transition-transform group-hover:scale-105"
                       loading="lazy"
@@ -123,7 +130,7 @@
                       Imagem indisponível
                     </span>
                   {/if}
-                  <span class="absolute right-3 bottom-3 rounded-full bg-accent/80 px-3 py-1 text-xs font-semibold text-accent-foreground sm:top-3 sm:bottom-auto sm:bg-accent">
+                  <span aria-hidden="true" class="absolute right-3 bottom-3 rounded-full bg-accent/80 px-3 py-1 text-xs font-semibold text-accent-foreground sm:top-3 sm:bottom-auto sm:bg-accent">
                     Nº {String(character.id).padStart(4, "0")}
                   </span>
                 </span>
@@ -136,7 +143,7 @@
                 <Button
                   variant={isSelected ? "secondary" : "ghost"}
                   class="w-full cursor-pointer"
-                  disabled={!isSelected && selected.length === 2}
+                  disabled={!hydrated || (!isSelected && selected.length === 2)}
                   aria-pressed={isSelected}
                   onclick={() => toggleSelection(character)}
                 >

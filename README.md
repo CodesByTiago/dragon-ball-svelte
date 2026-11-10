@@ -39,8 +39,16 @@ A aplicação sobe em `http://localhost:5173`.
 | `pnpm build`      | Build de produção                   |
 | `pnpm preview`    | Pré-visualiza o build de produção   |
 | `pnpm test`       | Executa os testes uma vez           |
+| `pnpm test:e2e`   | Executa os testes E2E no Chromium   |
 | `pnpm test:watch` | Executa os testes em modo watch     |
+| `pnpm audit:seo`  | Gera relatório Lighthouse local     |
 | `pnpm check`      | Verifica tipos e componentes Svelte |
+
+Para executar os testes E2E pela primeira vez, instale o navegador com `pnpm exec playwright install chromium`. Os testes usam um servidor local na porta 4179 e dados controlados; veja [QA e testes E2E](./docs/engineering/6-qa.md).
+
+Para auditar SEO com Lighthouse, inicie o servidor e execute `pnpm audit:seo`; uma URL absoluta opcional permite escolher outra rota. O relatório fica em `lighthouse-report.html`. Veja [SEO](./docs/engineering/4-seo.md) para detalhes e limitações.
+
+Na Vercel, imagens suportadas da Dragon Ball API são otimizadas dinamicamente. No desenvolvimento e preview local são usadas as imagens originais. A otimização está sujeita aos limites e à cobrança do plano Vercel; veja [Arquitetura](./docs/engineering/1-architecture.md).
 
 ## Estrutura
 
@@ -63,7 +71,8 @@ Cada feature tem seus loaders, componentes e testes. O acesso à Dragon Ball API
 - [Testes](./docs/engineering/3-testing.md)
 - [SEO](./docs/engineering/4-seo.md)
 - [Code review](./docs/engineering/5-code-review.md)
+- [QA e testes E2E](./docs/engineering/6-qa.md)
 
 ## Skills de agente
 
-O desenvolvimento é guiado por skills em `.agents/skills/`: `/db-prd` (produto), `/db-architecture` (arquitetura), `/db-dev` (implementação), `/db-code-review` (revisão) e `/db-seo` (SEO).
+O desenvolvimento é guiado por skills em `.agents/skills/`: `/db-prd` (produto), `/db-architecture` (arquitetura), `/db-dev` (implementação), `/db-code-review` (revisão), `/db-qa` (testes E2E) e `/db-seo` (SEO).

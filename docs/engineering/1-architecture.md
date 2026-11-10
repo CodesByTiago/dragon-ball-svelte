@@ -21,6 +21,7 @@
 - shadcn-svelte: https://www.shadcn-svelte.com/docs
 - MSW: https://mswjs.io/docs/
 - Dragon Ball API: https://web.dragonball-api.com/documentation
+- Otimização de imagens na Vercel: https://svelte.dev/docs/kit/adapter-vercel#Image-Optimization
 
 Consulte a documentação aplicável quando a implementação depender de detalhes de framework ou contrato externo.
 
@@ -110,6 +111,14 @@ Axios, Tailwind CSS, shadcn-svelte, Vitest e MSW estão instalados e configurado
 - Trate erros HTTP, respostas inválidas e dados ausentes como estados explícitos. Não substitua falhas por listas vazias nem apresente dados parciais como completos.
 - Campos de Ki, como `ki` e `maxKi`, são fornecidos como texto e podem usar escalas ou formatos distintos. Preserve-os como texto; não os converta para números nem derive um vencedor sem regra de produto validada.
 - Não adicione cache ou índice local sem necessidade demonstrada. Para o autocomplete client-side, use somente a rota interna de busca já definida e a busca `name` da Dragon Ball API; não crie outra rota proxy ou de sugestões.
+
+## Imagens remotas
+
+- Na build da Vercel (`VERCEL=1`), use `@sveltejs/adapter-vercel` e a API nativa de otimização para imagens remotas da Dragon Ball API. O projeto deve ter a opção **Enable access to System Environment Variables** habilitada na Vercel para disponibilizar essa variável. O adaptador automático continua responsável pelos demais ambientes.
+- Centralize larguras e padrões de origem em `src/lib/shared/images/config.ts`; o helper compartilhado gera `src` e `srcset` para catálogo, busca, detalhes, planeta, transformações e versus. Cada imagem informa seu `sizes` de acordo com o layout.
+- O otimizador permite apenas HTTPS em `dragonball-api.com` nos diretórios `characters`, `planetas`, `transformaciones` e `transformations`; outras URLs permanecem diretas, sem serem enviadas ao otimizador. A origem e os dados podem mudar: revise os padrões se a API passar a usar outros caminhos.
+- Fora da build Vercel, inclusive no desenvolvimento e preview local convencionais, as imagens mantêm os URLs originais; `/_vercel/image` não está disponível no preview do Vite. Não há fallback automático em caso de falha do serviço de otimização.
+- O serviço tem limites e pode gerar cobrança conforme o plano e o uso; no Hobby, o esgotamento da franquia pode causar respostas de erro para novas transformações. Consulte https://vercel.com/docs/image-optimization/limits-and-pricing e monitore o uso na Vercel.
 - A API é pública; não adicione autenticação ou segredos que o serviço não exige.
 
 ## SvelteKit e renderização
@@ -127,6 +136,7 @@ Axios, Tailwind CSS, shadcn-svelte, Vitest e MSW estão instalados e configurado
 - shadcn-svelte é obrigatório para os componentes de interface padrão. Mantenha os componentes gerados em `src/lib/shared/ui/` e suas configurações/aliases alinhados à arquitetura real; veja [estilização](./2-styling.md).
 - MSW intercepta chamadas HTTP em testes. Seus handlers compartilhados ficam em `src/lib/core/msw/`; a configuração do runner inicia e encerra o servidor e restaura handlers após cada teste. Veja [estilização](./2-styling.md) e [testes](./3-testing.md) para os detalhes operacionais.
 - Cada feature em `src/lib/features/` é acompanhada de testes no próprio diretório (loader em `server.test.ts` e componentes em `components/<Nome>/<Nome>.test.ts`); a cobertura mínima está em [testes](./3-testing.md).
+- Playwright Test executa testes E2E em navegador com MSW isolando também as chamadas Axios server-side, conforme [QA e testes E2E](./6-qa.md).
 - Não substitua Axios por `fetch` nos repositórios nem desative o MSW nos testes para acessar serviços reais.
 
 ## Convenções

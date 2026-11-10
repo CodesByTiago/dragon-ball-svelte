@@ -9,6 +9,8 @@
 
 Vitest, MSW e Axios estão instalados e configurados. Execute `pnpm test` para rodar os testes uma vez; `pnpm test:watch` mantém o Vitest em modo watch. `pnpm check` continua verificando tipos e componentes Svelte. Adicione novos testes em `src/**/*.test.ts`, junto ao módulo ou feature correspondente.
 
+Para jornadas em navegador, consulte [QA e testes E2E](./6-qa.md). A suíte Playwright é executada separadamente com `pnpm test:e2e`; `pnpm test` não executa E2E.
+
 ## Estratégia
 
 Priorize testes automatizados para os comportamentos importantes da feature:

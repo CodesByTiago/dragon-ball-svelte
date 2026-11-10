@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { optimizedImage } from "#lib/shared/images/optimizedImage.js";
   import type { CharacterSummary } from "#lib/shared/models/character.js";
 
   let query = $state("");
@@ -90,7 +91,8 @@
           >
             {#if character.image}
               <img
-                src={character.image}
+                {...optimizedImage(character.image, 96)}
+                sizes="48px"
                 alt=""
                 class="size-12 shrink-0 object-contain"
                 loading="lazy"

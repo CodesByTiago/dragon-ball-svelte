@@ -7,6 +7,10 @@
 
 <svelte:head>
   <title>{data.character.name} | Dragon Ball Explorer</title>
+  <meta
+    name="description"
+    content={`Conheça ${data.character.name}: informações, Ki, planeta de origem e transformações disponíveis no Dragon Ball Explorer.`}
+  />
 </svelte:head>
 
 <CharacterDetails character={data.character} catalogPage={data.catalogPage} />

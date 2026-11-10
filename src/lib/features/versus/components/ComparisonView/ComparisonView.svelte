@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { optimizedImage } from "#lib/shared/images/optimizedImage.js";
   import type { Character } from "#lib/shared/models/character.js";
   import { Button } from "#lib/shared/ui/button/index.js";
 
@@ -27,14 +28,18 @@
   </header>
 
   <div class="grid gap-5 md:grid-cols-2">
-    {#each characters as character (character.id)}
+    {#each characters as character, index (character.id)}
       <article class="overflow-hidden rounded-2xl border bg-card shadow-sm">
         <div class="flex h-56 items-center justify-center overflow-hidden bg-linear-to-br from-orange-100/70 via-amber-50 to-sky-100/60 p-4 sm:h-72 dark:from-orange-950/30 dark:via-muted dark:to-sky-950/30">
           {#if character.image}
             <img
-              src={character.image}
+              {...optimizedImage(character.image, 640)}
+              sizes="(min-width: 1280px) 640px, (min-width: 768px) 50vw, 100vw"
               alt={character.name}
               class="size-full object-contain"
+              loading={index === 0 ? "eager" : "lazy"}
+              fetchpriority={index === 0 ? "high" : "auto"}
+              decoding="async"
               width="320"
               height="240"
             />
@@ -90,7 +95,8 @@
                   <li class="flex items-center gap-3 rounded-lg border p-3">
                     {#if transformation.image}
                       <img
-                        src={transformation.image}
+                        {...optimizedImage(transformation.image, 160)}
+                        sizes="64px"
                         alt=""
                         class="h-20 w-16 shrink-0 rounded-md bg-accent/70 object-contain p-1"
                         loading="lazy"

@@ -31,5 +31,5 @@ Cuide dos requisitos e da implementação de SEO do projeto, mantendo as recomen
 1. Execute `pnpm check` e, quando apropriado, `pnpm build`.
 2. Confira o HTML renderizado pelo servidor, incluindo `<title>`, description, headings e conteúdo principal sem depender de JavaScript no navegador.
 3. Verifique links, textos alternativos, status de páginas inválidas e regras reais de rastreamento, quando existirem.
-4. Use uma auditoria automatizada apenas se estiver configurada; não invente comandos ou metas de pontuação.
+4. Quando uma auditoria for pertinente, siga as instruções de Lighthouse em `docs/engineering/4-seo.md`, confira a URL auditada e reporte resultados, metas não atingidas e limitações.
 5. No resumo final, informe as mudanças, as rotas verificadas, os comandos executados e decisões de publicação que continuem pendentes.
