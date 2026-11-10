@@ -119,7 +119,7 @@ Axios, Tailwind CSS, shadcn-svelte, Vitest e MSW estão instalados e configurado
 - Valide IDs recebidos na rota do versus e trate IDs inexistentes, iguais ou personagens indisponíveis com um estado apropriado, sem renderizar uma comparação enganosa.
 - Preserve os estados de carregamento, vazio, falha e dados ausentes definidos no [PRD](../product/1-prd.md).
 - Não mova chamadas para o cliente por padrão. Se uma interação exigir busca incremental no navegador, mantenha-a tipada e implemente debounce/cancelamento apenas quando necessário para evitar requisições obsoletas.
-- A primeira versão apresenta 12 personagens por página, com navegação explícita por `page`; o autocomplete mostra estado de carregamento, resultados, ausência de correspondência e falha.
+- O catálogo apresenta 12 personagens por página, com navegação numérica e controles para primeira, anterior, próxima e última página usando `page` e os metadados de paginação; o autocomplete mostra estado de carregamento, resultados, ausência de correspondência e falha.
 
 ## Estilos e testes
 

@@ -83,13 +83,61 @@ describe("CatalogView", () => {
   });
 
   it("keeps pagination links free of selection parameters", () => {
+    comparisonSelection.select(goku);
     render(CatalogView, { catalog: catalog([goku], { currentPage: 2, totalPages: 3 }) });
 
+    expect(screen.getByRole("link", { name: "Primeira página" }).getAttribute("href")).toBe(
+      "/?page=1",
+    );
     expect(screen.getByRole("link", { name: "Página anterior" }).getAttribute("href")).toBe(
       "/?page=1",
     );
+    expect(screen.getByRole("link", { name: "Página 2" }).getAttribute("aria-current")).toBe(
+      "page",
+    );
+    expect(screen.getByRole("link", { name: "Página 3" }).getAttribute("href")).toBe("/?page=3");
     expect(screen.getByRole("link", { name: "Próxima página" }).getAttribute("href")).toBe(
       "/?page=3",
     );
+    expect(screen.getByRole("link", { name: "Última página" }).getAttribute("href")).toBe(
+      "/?page=3",
+    );
+    expect(comparisonSelection.items.map((character) => character.id)).toEqual([1]);
+  });
+
+  it("disables first and previous controls on the first page", () => {
+    render(CatalogView, { catalog: catalog([goku], { currentPage: 1, totalPages: 5 }) });
+
+    expect(
+      (screen.getByRole("button", { name: "Primeira página" }) as HTMLButtonElement).disabled,
+    ).toBe(true);
+    expect(
+      (screen.getByRole("button", { name: "Página anterior" }) as HTMLButtonElement).disabled,
+    ).toBe(true);
+    expect(screen.getByRole("link", { name: "Última página" }).getAttribute("href")).toBe(
+      "/?page=5",
+    );
+    expect(screen.queryByRole("link", { name: "Página 4" })).toBeNull();
+  });
+
+  it("disables last and next controls on the last page", () => {
+    render(CatalogView, { catalog: catalog([goku], { currentPage: 5, totalPages: 5 }) });
+
+    expect(
+      (screen.getByRole("button", { name: "Última página" }) as HTMLButtonElement).disabled,
+    ).toBe(true);
+    expect(
+      (screen.getByRole("button", { name: "Próxima página" }) as HTMLButtonElement).disabled,
+    ).toBe(true);
+    expect(screen.getByRole("link", { name: "Página 5" }).getAttribute("aria-current")).toBe(
+      "page",
+    );
+    expect(screen.getByRole("link", { name: "Página 3" }).getAttribute("href")).toBe("/?page=3");
+  });
+
+  it("hides pagination for a single page", () => {
+    render(CatalogView, { catalog: catalog([goku]) });
+
+    expect(screen.queryByRole("navigation", { name: "Paginação do catálogo" })).toBeNull();
   });
 });

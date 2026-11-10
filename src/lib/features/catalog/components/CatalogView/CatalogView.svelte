@@ -11,6 +11,11 @@
   let { catalog }: Props = $props();
   let selected = $derived(comparisonSelection.items);
   let selectionMessage = $state("");
+  let pageNumbers = $derived.by(() => {
+    const count = Math.min(3, catalog.totalPages);
+    const start = Math.max(1, Math.min(catalog.currentPage - 1, catalog.totalPages - count + 1));
+    return Array.from({ length: count }, (_, index) => start + index);
+  });
 
   function clearSelection() {
     comparisonSelection.clear();
@@ -146,28 +151,54 @@
   {/if}
 
   {#if catalog.totalPages > 1}
-    <nav class="mt-8 flex items-center justify-between gap-4" aria-label="Paginação do catálogo">
-      {#if catalog.currentPage > 1}
+    <nav class="mt-8 flex flex-wrap items-center justify-center gap-2" aria-label="Paginação do catálogo">
+      <Button
+        href={catalog.currentPage > 1 ? "/?page=1" : undefined}
+        disabled={catalog.currentPage <= 1}
+        variant="outline"
+        size="icon-lg"
+        aria-label="Primeira página"
+      >
+        <span aria-hidden="true">«</span>
+      </Button>
+      <Button
+        href={catalog.currentPage > 1 ? `/?page=${catalog.currentPage - 1}` : undefined}
+        disabled={catalog.currentPage <= 1}
+        variant="outline"
+        size="icon-lg"
+        aria-label="Página anterior"
+      >
+        <span aria-hidden="true">‹</span>
+      </Button>
+      {#each pageNumbers as pageNumber (pageNumber)}
         <Button
-          href={`/?page=${catalog.currentPage - 1}`}
-          variant="outline"
+          href={`/?page=${pageNumber}`}
+          variant={pageNumber === catalog.currentPage ? "default" : "outline"}
+          size="icon-lg"
+          aria-label={`Página ${pageNumber}`}
+          aria-current={pageNumber === catalog.currentPage ? "page" : undefined}
         >
-          Página anterior
+          {pageNumber}
         </Button>
-      {:else}
-        <span></span>
-      {/if}
-      <span class="text-sm text-muted-foreground">
-        {catalog.currentPage} / {catalog.totalPages}
-      </span>
-      {#if catalog.currentPage < catalog.totalPages}
-        <Button
-          href={`/?page=${catalog.currentPage + 1}`}
-          variant="outline"
-        >
-          Próxima página
-        </Button>
-      {/if}
+      {/each}
+      <Button
+        href={catalog.currentPage < catalog.totalPages ? `/?page=${catalog.currentPage + 1}` : undefined}
+        disabled={catalog.currentPage >= catalog.totalPages}
+        variant="outline"
+        size="icon-lg"
+        aria-label="Próxima página"
+      >
+        <span aria-hidden="true">›</span>
+      </Button>
+      <Button
+        href={catalog.currentPage < catalog.totalPages ? `/?page=${catalog.totalPages}` : undefined}
+        disabled={catalog.currentPage >= catalog.totalPages}
+        variant="outline"
+        size="icon-lg"
+        aria-label="Última página"
+      >
+        <span aria-hidden="true">»</span>
+      </Button>
     </nav>
   {/if}
 </div>

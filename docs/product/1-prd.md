@@ -62,6 +62,7 @@ Quem visita a aplicação precisa de uma forma direta de consultar informações
 ## Critérios de aceitação
 
 - A página inicial permite consultar o catálogo sem login.
+- Quando houver mais de uma página, o catálogo oferece navegação numérica e controles para primeira, anterior, próxima e última página.
 - Ao digitar uma consulta, a busca apresenta sugestões correspondentes a personagens disponíveis no catálogo.
 - Cada item do catálogo e cada sugestão de busca permitem abrir a página de detalhes do personagem correspondente; a ação de abrir detalhes não substitui a ação de selecionar personagens para o versus.
 - A página de detalhes identifica o personagem e apresenta as informações disponíveis da API, incluindo planeta de origem e transformações quando fornecidos.
