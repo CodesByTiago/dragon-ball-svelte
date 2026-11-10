@@ -93,7 +93,7 @@
         </div>
       </div>
 
-      <ul class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+      <ul class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         {#each catalog.items as character (character.id)}
           {@const isSelected = selected.some((item) => item.id === character.id)}
           <li>
@@ -118,7 +118,7 @@
                       Imagem indisponível
                     </span>
                   {/if}
-                  <span class="absolute right-3 top-3 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
+                  <span class="absolute right-3 bottom-3 rounded-full bg-accent/80 px-3 py-1 text-xs font-semibold text-accent-foreground sm:top-3 sm:bottom-auto sm:bg-accent">
                     Nº {String(character.id).padStart(4, "0")}
                   </span>
                 </span>
