@@ -20,4 +20,12 @@ describe("catalog loader", () => {
     await expect(searchCatalogCharacters("goku")).resolves.toMatchObject([{ name: "Goku" }]);
     await expect(searchCatalogCharacters("zzz")).resolves.toEqual([]);
   });
+
+  it("searches by character number when the query is numeric", async () => {
+    await expect(searchCatalogCharacters("1")).resolves.toMatchObject([{ id: 1, name: "Goku" }]);
+    await expect(searchCatalogCharacters("0002")).resolves.toMatchObject([
+      { id: 2, name: "Vegeta" },
+    ]);
+    await expect(searchCatalogCharacters("99")).resolves.toEqual([]);
+  });
 });
